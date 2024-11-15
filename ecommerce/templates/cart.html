@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5 " style="margin-bottom:100px;">
+    <h6 class="text-center"><strong>Shopping Cart</strong></h6>
+    <p></p>
+<div class="row">
+
+    <div class="col-7">
+        <table class="table table-bordered table-primary text-center">
+            <tr><th colspan="7">Cart Items</th></tr>
+
+            {% for i in cart %}
+
+            <tr>
+                <td><img src="{{i.product.image.url}}" height="100px" width="100px"></td>
+                <td>Product Name:{{i.product.name}}</td>
+                <td>Quantity:{{i.quantity}}<br>
+                unit price:{{i.product.price}}</td>
+                <td>Subtotal:{{i.subtotal}}</td>
+<td>
+                {% if i.product.stock > 0 %}
+                <a href="{% url 'cart:addtocart' i.product.id %}"><i class="fa fa-plus-circle text-dark" aria-hidden="true"></i></a>
+                    <a href="{% url 'cart:cart_remove' i.product.id %}"><i class="fa fa-minus-circle text-dark" aria-hidden="true"></i></a>
+                    <a href="{%url 'cart:delete' i.product.id %}"><i class="fa fa-trash text-dark" aria-hidden="true"></i></a>
+                     {% else %}
+                    <a href="{% url 'cart:cart_remove' i.product.id %}"><i class="fa fa-minus-circle text-dark" aria-hidden="true"></i></a>
+                    <a href="{%url 'cart:delete' i.product.id %}"><i class="fa fa-trash text-dark" aria-hidden="true"></i></a>
+                     {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+    <div class="col-4">
+        <table class="table table-bordered table-primary text-center">
+            <tr>
+                <th>Check Out</th>
+            </tr>
+            <tr>
+                <td>Total:{{total}}</td>
+            </tr>
+        </table>
+        <div class="d-flex justify-content-between">
+        <a href="{%url 'cart:orderform' %}" class="btn btn-primary">Place Order</a>
+        <a href="" class="btn btn-primary">Continue Shopping</a>
+        </div>
+    </div>
+</div>
+
+
+</div>
+</div>
+
+{% endblock %}
